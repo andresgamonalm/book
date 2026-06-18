@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Andrés Gamonal — Brandformance Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Paleta Gamonal Brandformance Lab — colores oficiales */
+    --navy:#040764;
+    --navy-2:#0a0d8a;
+    --blue:#1c73cb;
+    --teal:#20b6b6;
+    --yellow:#fce865;
+    --magenta:#b318a3;
+    --cyan:#7CD4FF;
+    --ink:#3B3B3B;
+    --soft:#5E6175;
+    --muted:#9499AD;
+    --line:#E6E8EE;
+    --bg:#f5f5f5;
+    --max:1200px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Roboto',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.40s}
+
+  /* ── NAV (solo logo, sin menú) ─────────────────── */
+  .nav{position:sticky;top:0;left:0;right:0;z-index:80;background:#fff;border-bottom:1px solid var(--line);width:100%}
+  .nav-row{max-width:var(--max);margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:flex-start;gap:12px}
+  .nav-logo img{height:38px;width:auto;display:block}
+
+  /* ── FAB lateral SOLO cuando hay espacio (>1400px) — afuera del contenido ─────── */
+  .fab{display:none}
+  @media(min-width:1400px){
+    .fab{display:flex;position:fixed;right:max(20px,calc(50vw - 680px));top:50%;transform:translateY(-50%);z-index:70;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px;box-shadow:0 8px 20px rgba(42,45,69,.10)}
+    .fab a{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);background:#fff;transition:all .2s}
+    .fab a:hover{background:var(--navy);color:#fff;transform:scale(1.08)}
+    .fab a svg{width:18px;height:18px}
+  }
+
+  /* ── HERO con SLIDER (sin difuminado) ─── */
+  .hero-section{background:var(--navy)}
+  .slider{position:relative;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 60%,var(--blue) 100%);color:#fff;overflow:hidden}
+  .slider input[type=radio]{position:absolute;opacity:0;pointer-events:none}
+  .slides{position:relative}
+  .slide{display:none;padding:72px 0 96px}
+  .slider #s1:checked ~ .slides .slide-1{display:block}
+  .slider #s2:checked ~ .slides .slide-2{display:block}
+
+  .slide-wrap{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;position:relative;z-index:2}
+  .slide-meta{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-size:12px;font-weight:500;margin-bottom:24px;color:#fff;width:fit-content}
+  .slide-meta .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan)}
+  .slide h1{font-weight:900;font-size:clamp(38px,5.5vw,76px);line-height:1;margin:0 0 22px;color:#fff;letter-spacing:-.01em}
+  .slide .lead{font-size:clamp(15px,1.4vw,18px);color:rgba(255,255,255,.92);max-width:540px;margin:0 0 32px;line-height:1.6}
+  .slide-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:#fff;color:var(--navy);border-radius:999px;font-weight:600;font-size:15px;transition:all .2s}
+  .slide-cta:hover{background:var(--cyan);transform:translateY(-2px)}
+  .slide-sign{margin-top:36px;display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.65);font-size:13px}
+  .slide-sign::before{content:'';width:24px;height:1px;background:rgba(255,255,255,.40)}
+  .slide-sign b{color:#fff;font-weight:700;margin-right:4px}
+  .slide-img{aspect-ratio:1/1;border-radius:24px;overflow:hidden;background-size:cover;background-position:center;max-width:380px;justify-self:end;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+
+  .slider-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+  .slider-dots label{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:all .25s}
+  .slider #s1:checked ~ .slider-dots label[for=s1]{background:#fff;width:32px;border-radius:999px}
+  .slider #s2:checked ~ .slider-dots label[for=s2]{background:#fff;width:32px;border-radius:999px}
+
+  @media(max-width:880px){
+    .slide{padding:40px 0 68px}
+    .slide-wrap{grid-template-columns:1fr;gap:28px;text-align:center}
+    .slide-meta{margin:0 auto 22px}
+    .slide .lead{margin:0 auto 28px}
+    .slide-img{order:-1;max-width:240px;margin:0 auto;justify-self:center}
+    .slide h1{font-size:38px}
+    .slide-sign{justify-content:center}
+  }
+
+  /* ── STATS rediseñados (no básicos) ─── */
+  .stats{background:#fff;padding:48px 0;border-bottom:1px solid var(--line)}
+  .stats-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .stat{display:flex;align-items:center;gap:16px;padding:20px 22px;background:var(--bg);border-radius:16px;border:1px solid var(--line);transition:all .25s}
+  .stat:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 12px 24px rgba(42,45,69,.08)}
+  .stat-icon{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:var(--navy);display:flex;align-items:center;justify-content:center;color:#fff}
+  .stat-icon svg{width:24px;height:24px}
+  .stat .v{font-size:28px;font-weight:900;color:var(--navy);line-height:1;display:flex;align-items:baseline}
+  .stat .v sup{font-size:.62em;color:var(--navy);font-weight:900;margin-left:3px;top:-.25em}
+  .stat .l{font-size:12px;color:var(--soft);font-weight:500;margin-top:4px;line-height:1.3}
+  @media(max-width:880px){
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+    .stat{padding:16px 18px;gap:12px}
+    .stat-icon{width:40px;height:40px}
+    .stat-icon svg{width:20px;height:20px}
+    .stat .v{font-size:22px}
+  }
+
+  /* ── DISCIPLINAS marquee (limpia, sutil, profesional) ─── */
+  .disciplines{padding:18px 0;background:#fff;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .disc-track{display:flex;align-items:center;animation:scroll 38s linear infinite;width:max-content;will-change:transform}
+  .disc-item{display:inline-flex;align-items:center;gap:10px;flex-shrink:0;padding:0 28px;color:var(--navy);font-size:15px;font-weight:500;position:relative}
+  .disc-item::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:18px;background:var(--line)}
+  .disc-item svg{width:18px;height:18px;color:var(--blue);flex-shrink:0;stroke-width:2}
+  @keyframes scroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+  @media(max-width:780px){
+    .disc-item{font-size:14px;padding:0 20px;gap:8px}
+    .disc-item svg{width:16px;height:16px}
+  }
+
+  /* ── ABOUT (texto ancho usando laterales) ── */
+  .about{padding:96px 0;background:#fff}
+  .about-head{margin-bottom:48px;text-align:center}
+  .about-head .kicker{display:inline-block;padding:5px 14px;background:rgba(0,113,206,.10);color:var(--blue);font-size:12px;font-weight:700;border-radius:999px;margin-bottom:14px}
+  .about-head h2{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1;margin:0;color:var(--ink)}
+  .about-body{max-width:980px;margin:0 auto;padding:0 24px;font-size:clamp(17px,1.7vw,19px);line-height:1.7;color:var(--ink)}
+  .about-body p{margin:0 0 22px;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+  .about-body p:last-child{margin-bottom:0}
+  .about-body b{font-weight:700;color:var(--blue)}
+
+  /* ── MARCAS ──────────────────────────── */
+  .brands{padding:80px 0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .section-head{text-align:center;margin-bottom:40px}
+  .section-head .kicker{display:inline-block;padding:5px 14px;background:rgba(0,113,206,.10);color:var(--blue);font-size:12px;font-weight:700;border-radius:999px;margin-bottom:14px}
+  .section-head h2{font-size:clamp(32px,4.5vw,52px);font-weight:900;line-height:1;margin:0;color:var(--ink)}
+  .brand-grid{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .brand-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 12px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:all .25s;text-align:center}
+  .brand-card:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 12px 24px rgba(42,45,69,.08)}
+  .brand-card .logo{width:54px;height:54px;border-radius:12px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+  .brand-card .logo::before{content:attr(data-fb);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px;letter-spacing:.3px;text-align:center;padding:4px}
+  .brand-card .logo img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
+  .brand-card .logo.radar{background:var(--navy);color:#fff;font-weight:900;font-size:12px}
+  .brand-card .logo.bmi-bg{background:#072146}
+  .brand-card .logo.libertyandes-bg{background:#FFD500}
+  .brand-card .logo.libertyandes-bg::before{color:#000}
+  .brand-card .logo.libertychile-bg{background:#FFD500}
+  .brand-card .logo.libertychile-bg::before{color:#000}
+  .brand-card .logo.bbva-bg{background:#004481}
+  .brand-card .logo.santander-bg{background:#EC0000}
+  .brand-card .yr{font-size:11px;color:var(--blue);font-weight:700}
+  .brand-card .nm{font-size:13px;font-weight:600;color:var(--ink);line-height:1.2}
+  @media(max-width:780px){.brand-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:480px){.brand-grid{grid-template-columns:repeat(2,1fr)}}
+
+  /* ── CASE ────────────────────────────── */
+  .case{padding:72px 0;border-bottom:1px solid var(--line)}
+  .case:nth-of-type(even){background:var(--bg)}
+  .case-banner{max-width:var(--max);margin:0 auto 32px;padding:0 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .case-banner .brand-l{flex-shrink:0;width:72px;height:72px;border-radius:16px;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);position:relative}
+  .case-banner .brand-l::before{content:attr(data-fb);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.3px;text-align:center;padding:4px;line-height:1.1}
+  .case-banner .brand-l img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
+  .case-banner .brand-l.radar{background:var(--navy);color:#fff;font-weight:900;font-size:14px}
+  .case-banner .brand-l.bmi-bg{background:#072146}
+  .case-banner .brand-l.libertyandes-bg{background:#FFD500}
+  .case-banner .brand-l.libertyandes-bg::before{color:#000}
+  .case-banner .brand-l.libertychile-bg{background:#FFD500}
+  .case-banner .brand-l.libertychile-bg::before{color:#000}
+  .case-banner .brand-l.bbva-bg{background:#004481}
+  .case-banner .brand-l.santander-bg{background:#EC0000}
+  .case-banner .meta-l{flex:1;min-width:0}
+  .case-num{display:inline-flex;align-items:center;gap:12px;padding:4px 12px;background:rgba(0,113,206,.10);color:var(--blue);font-size:11px;font-weight:700;border-radius:999px;margin-bottom:10px}
+  .case-num .yr{color:var(--ink);font-weight:500}
+  .case h2{font-size:clamp(28px,4vw,52px);font-weight:900;line-height:1;margin:0 0 8px;color:var(--ink)}
+  .case .role{font-size:14px;color:var(--soft);font-weight:500;margin:0}
+  .case .summary{max-width:880px;margin:0 auto 36px;padding:0 20px;font-size:clamp(15px,1.4vw,18px);line-height:1.55;color:var(--ink)}
+
+  /* KPIs */
+  .kpis{max-width:var(--max);margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .kpi{padding:24px 22px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:all .25s}
+  .kpi:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 14px 30px rgba(42,45,69,.08)}
+  .kpi .v{font-size:clamp(30px,3.5vw,44px);font-weight:900;line-height:1;color:var(--navy);display:flex;align-items:baseline;flex-wrap:wrap}
+  .kpi .v sup{font-size:.62em;color:var(--navy);font-weight:900;margin-left:4px;top:-.32em}
+  .kpi .l{margin-top:10px;font-size:13px;color:var(--soft);font-weight:500;line-height:1.4}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr;gap:10px}}
+
+  /* Res head */
+  .res-head{max-width:var(--max);margin:36px auto 16px;padding:0 20px;display:flex;align-items:center;gap:14px;font-size:13px;font-weight:700;color:var(--ink)}
+  .res-head .bar{width:28px;height:2px;background:var(--blue);border-radius:2px}
+  .res-head .count{color:var(--muted);font-weight:400;font-size:12px;margin-left:auto}
+
+  /* Docs */
+  .docs{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .doc{display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:12px;border:1px solid var(--line);transition:all .25s}
+  .doc:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 12px 24px rgba(42,45,69,.08)}
+  .doc .thumb{flex-shrink:0;width:74px;height:74px;border-radius:9px;background:#e8eaf0 center/cover;position:relative;overflow:hidden}
+  .doc .thumb img{width:100%;height:100%;object-fit:cover}
+  .doc .tag{position:absolute;bottom:4px;left:4px;background:#fff;color:var(--navy);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+  .doc h5{font-size:13.5px;font-weight:500;line-height:1.4;margin:0 0 4px;color:var(--ink)}
+  .doc .more{font-size:11.5px;color:var(--blue);font-weight:600}
+  @media(max-width:780px){.docs{grid-template-columns:1fr}}
+
+  /* Videos */
+  .vids{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .vid{display:block;position:relative;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:16/9;transition:all .3s}
+  .vid:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(0,0,0,.20)}
+  .vid img{width:100%;height:100%;object-fit:cover;opacity:.9;transition:opacity .3s,transform .5s}
+  .vid:hover img{opacity:1;transform:scale(1.04)}
+  .vid::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(4,7,100,.75) 100%);z-index:1}
+  .vid .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .25s}
+  .vid:hover .play{background:var(--navy);transform:translate(-50%,-50%) scale(1.1)}
+  .vid:hover .play svg{fill:#fff}
+  .vid .play svg{width:18px;height:18px;fill:var(--navy);margin-left:2px;transition:fill .25s}
+  .vid .cap{position:absolute;bottom:12px;left:14px;right:46px;color:#fff;font-size:12.5px;font-weight:500;z-index:2}
+  .vid .yt{position:absolute;bottom:12px;right:12px;color:rgba(255,255,255,.85);font-size:10.5px;z-index:2;font-weight:500}
+  @media(max-width:780px){.vids{grid-template-columns:1fr}}
+
+  /* Audios */
+  .auds{max-width:var(--max);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .aud{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;transition:all .25s}
+  .aud:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 12px 24px rgba(42,45,69,.08)}
+  .aud .top{display:flex;align-items:center;gap:12px}
+  .aud .cov{width:50px;height:50px;border-radius:9px;background:#e8eaf0 center/cover;overflow:hidden;border:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px}
+  .aud .cov img{width:100%;height:100%;object-fit:cover}
+  .aud .nm{font-size:13.5px;font-weight:600;color:var(--ink);margin:0;line-height:1.3}
+  .aud .sub{font-size:11.5px;color:var(--soft);margin-top:2px;display:flex;align-items:center;gap:5px}
+  .aud .sub::before{content:'♪';color:var(--teal);font-weight:700}
+  .aud audio{width:100%;height:34px}
+  @media(max-width:780px){.auds{grid-template-columns:1fr}}
+
+  /* Flags */
+  .flags{max-width:var(--max);margin:0 auto;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap}
+  .flags a{display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 12px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink);transition:all .25s}
+  .flags a:hover{background:var(--navy);color:#fff;border-color:var(--navy);transform:translateY(-2px)}
+  .flags img{width:20px;height:20px;object-fit:contain;border-radius:50%;background:var(--bg)}
+
+  /* Back (refuerzo visual) */
+  .back{max-width:var(--max);margin:40px auto 0;padding:24px 20px 0;text-align:center;border-top:1px solid var(--line)}
+  .back a{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--navy);color:#fff;border-radius:999px;font-size:13.5px;font-weight:600;transition:all .2s}
+  .back a:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 10px 24px rgba(4,7,100,.25)}
+
+  /* ── CERTIFICACIONES ─────────────────── */
+  .cert{padding:80px 0 0;background:var(--navy);color:#fff}
+  .cert-grid{max-width:var(--max);margin:0 auto;padding:0 20px 48px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+  .cert-info .kicker{display:inline-flex;padding:6px 14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;font-size:12px;font-weight:500;margin-bottom:18px;color:var(--cyan)}
+  .cert-info h2{font-size:clamp(30px,4vw,48px);font-weight:900;line-height:1.05;margin:0 0 16px;color:#fff}
+  .cert-info h2 .g{color:var(--cyan)}
+  .cert-info p{color:rgba(255,255,255,.80);font-size:16px;line-height:1.6;margin:0 0 26px;max-width:460px}
+  .cert-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;background:#fff;color:var(--navy);border-radius:999px;font-weight:600;font-size:14.5px;transition:all .2s}
+  .cert-cta:hover{background:var(--cyan);transform:translateY(-2px)}
+  .cert-img{aspect-ratio:4/3;border-radius:18px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.30)}
+  .cert-img img{width:100%;height:100%;object-fit:cover}
+  .cert-logos{padding:18px 0;background:rgba(0,0,0,.20);border-top:1px solid rgba(255,255,255,.10);overflow:hidden}
+  .cert-logos-track{display:flex;gap:48px;align-items:center;animation:scroll 24s linear infinite;width:max-content;font-size:15px;font-weight:500;color:rgba(255,255,255,.85)}
+  .cert-logos-track span{display:inline-flex;align-items:center;gap:8px;flex-shrink:0}
+  .cert-logos-track span::before{content:'✓';color:var(--cyan);font-weight:900}
+  @media(max-width:880px){.cert-grid{grid-template-columns:1fr}}
+
+  /* Video modal universal */
+  .vmodal{position:fixed;inset:0;background:rgba(4,7,100,.94);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+  .vmodal.open{display:flex;animation:vfade .25s ease}
+  @keyframes vfade{from{opacity:0}to{opacity:1}}
+  .vmodal-bg{position:absolute;inset:0;cursor:pointer}
+  .vmodal-inner{position:relative;background:#000;width:100%;max-width:960px;border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5)}
+  .vmodal-x{position:absolute;top:-44px;right:0;color:#fff;font-size:28px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.10);border-radius:50%;cursor:pointer;transition:background .2s;border:none;font-weight:300}
+  .vmodal-x:hover{background:rgba(255,255,255,.20)}
+  .vmodal-frame{aspect-ratio:16/9}
+  .vmodal-frame iframe{width:100%;height:100%;border:0;display:block}
+
+  /* Closing */
+  .close{padding:96px 0;background:#fff;border-top:1px solid var(--line);text-align:center}
+  .close-inner{max-width:var(--max);margin:0 auto;padding:0 20px}
+  .close .kicker{display:inline-flex;padding:7px 16px;background:rgba(0,113,206,.10);border-radius:999px;font-size:13px;color:var(--blue);font-weight:500;margin-bottom:24px}
+  .close h2{font-size:clamp(32px,5vw,64px);font-weight:900;line-height:1.05;margin:0 0 22px;color:var(--ink)}
+  .close h2 .g{color:var(--blue)}
+  .close p{max-width:540px;margin:0 auto 36px;color:var(--soft);font-size:16px;line-height:1.6}
+  .close-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .ctap{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;background:var(--navy);color:#fff;border-radius:999px;font-weight:500;font-size:14.5px;transition:all .2s}
+  .ctap:hover{background:var(--blue);transform:translateY(-2px)}
+  .ctas{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;background:#fff;color:var(--ink);border-radius:999px;font-weight:500;font-size:14.5px;border:1px solid var(--line);transition:all .2s}
+  .ctas:hover{border-color:var(--navy);transform:translateY(-2px)}
+
+
+  footer{padding:24px 0;background:var(--navy);color:rgba(255,255,255,.55);font-size:13px;text-align:center}
+  footer a{color:var(--cyan);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body id="top">
+
+<!-- NAV (solo logo) -->
+<nav class="nav">
+  <div class="nav-row">
+    <a class="nav-logo" href="#top"><img src="https://andresgamonal.com/wp-content/uploads/2025/12/Logo-Gamonal-Azul-Rey-1.png" alt="Gamonal"></a>
+  </div>
+</nav>
+
+<!-- FAB -->
+<div class="fab">
+  <a href="https://wa.me/525531333539" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-1 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5l-.8 4 4-.8c1.4.8 3 1.2 4.5 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
+  <a href="mailto:hola@andresgamonal.com?subject=Oportunidad laboral" aria-label="Correo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+  <a href="http://www.linkedin.com/in/andresgamonal" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 20.4h-3.5V15c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.5H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 110-4.1 2.1 2.1 0 010 4.1zm1.8 13h-3.6V9h3.6v11.4z"/></svg></a>
+  <a href="https://cdn-cv.andresgamonal.com/cv-a-gamonal-diciembre-2025.pdf" target="_blank" aria-label="CV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></a>
+</div>
+
+<!-- HERO con SLIDER (UN solo CTA + firma) -->
+<section class="hero-section">
+  <div class="slider">
+    <input type="radio" name="hero" id="s1" checked>
+    <input type="radio" name="hero" id="s2">
+    <div class="slides">
+      <div class="slide slide-1">
+        <div class="slide-wrap">
+          <div>
+            <span class="slide-meta"><span class="dot"></span>Disponible · Q3 2026</span>
+            <h1>Bienvenido a mi<br>espacio laboral</h1>
+            <p class="lead">Este espacio está pensado y desarrollado para que puedas conocer mi oferta de valor profesional, a través de algunos proyectos, estrategias e indicadores que están a tu disposición.</p>
+            <a class="slide-cta" href="#" data-video="rW8XFN3lRM8"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Ver video</a>
+            <div class="slide-sign"><span><b>Andrés Gamonal</b> · Marketing & Communications · LATAM</span></div>
+          </div>
+          <div class="slide-img" style="background-image:url('https://andresgamonal.com/wp-content/uploads/2025/12/FotoBrandformance.png.webp')"></div>
+        </div>
+      </div>
+      <div class="slide slide-2">
+        <div class="slide-wrap">
+          <div>
+            <span class="slide-meta"><span class="dot"></span>Actualización 2026</span>
+            <h1>Certificaciones<br>digitales 2026</h1>
+            <p class="lead">Para este año, ya cuento con mis certificaciones digitales, incluyendo los aplicativos de Google, LinkedIn y también HubSpot.</p>
+            <a class="slide-cta" href="https://cdn-cv.andresgamonal.com/certificaciones-gamonal-2025-26.pdf" target="_blank">Conoce aquí →</a>
+            <div class="slide-sign"><span><b>Google · LinkedIn · HubSpot</b> · 2026</span></div>
+          </div>
+          <div class="slide-img" style="background-image:url('https://andresgamonal.com/wp-content/uploads/2025/11/Certificaciones-con-logos.jpg.webp')"></div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-dots">
+      <label for="s1" aria-label="Slide 1"></label>
+      <label for="s2" aria-label="Slide 2"></label>
+    </div>
+  </div>
+</section>
+
+<!-- STATS rediseñados con iconos -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat reveal d1">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div><div class="v">15<sup>+</sup></div><div class="l">Años en marketing</div></div>
+    </div>
+    <div class="stat reveal d2">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div><div class="v">6</div><div class="l">Mercados LATAM</div></div>
+    </div>
+    <div class="stat reveal d3">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg></div>
+      <div><div class="v">5</div><div class="l">Compañías líder</div></div>
+    </div>
+    <div class="stat reveal d4">
+      <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></div>
+      <div><div class="v">1</div><div class="l">Effie de Bronce</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCIPLINAS marquee (reemplaza marcas) -->
+<section class="disciplines">
+  <div class="disc-track">
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Estrategia de marca</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg>Digital performance</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-5v12L3 13z"/><path d="M11 14v5l4 1V13"/></svg>Publicidad masiva</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4v6H7zM13 9h4M13 13h4"/></svg>Medios tradicionales</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>Research y métricas</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M9 6V2h6v4M9 13h.01M15 13h.01M9 17h6"/></svg>Inteligencia artificial</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="16" height="12" rx="2"/><path d="M22 8l-6 4 6 4z"/></svg>Producción audiovisual</div>
+    <!-- duplicado para loop -->
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Estrategia de marca</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg>Digital performance</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-5v12L3 13z"/><path d="M11 14v5l4 1V13"/></svg>Publicidad masiva</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h4v6H7zM13 9h4M13 13h4"/></svg>Medios tradicionales</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>Research y métricas</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M9 6V2h6v4M9 13h.01M15 13h.01M9 17h6"/></svg>Inteligencia artificial</div>
+    <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="16" height="12" rx="2"/><path d="M22 8l-6 4 6 4z"/></svg>Producción audiovisual</div>
+  </div>
+</section>
+
+<!-- ABOUT (sin punto, ancho 980px) -->
+<section class="about" id="about">
+  <div class="about-head reveal">
+    <span class="kicker">Sobre mí</span>
+    <h2>Marketing integrado al negocio</h2>
+  </div>
+  <div class="about-body reveal">
+    <p>Ejecutivo senior de marketing con más de 15 años de trayectoria liderando estrategias de crecimiento en compañías multinacionales. Formación en agencias de publicidad y carrera consolidada desde la posición del cliente, con experiencia en liderazgo de equipos internos y gestión de agencias de publicidad y medios en entornos B2C y B2B, principalmente en servicios financieros y seguros. <b>Ganador de un Effie de Bronce</b> (2017) por una campaña de marca y performance.</p>
+    <p>Enfoque de marketing integrado al negocio que articula estrategia, ejecución y análisis en función de los objetivos del negocio y de la marca, integrando <b>branding, performance digital, publicidad, medios tradicionales,</b> redes sociales y experiencia del consumidor, con soporte en datos, investigación y métricas.</p>
+    <p>Tanto en roles de colaborador como de liderazgo, mi forma de trabajo se sustenta en la convicción de que el <b>conocimiento no tiene límites</b>, lo que me lleva a identificar, aprovechar o crear oportunidades que generen valor real para la compañía, fortalezcan la colaboración e inspiren los entornos donde me desempeño.</p>
+  </div>
+</section>
+
+<!-- MARCAS (sin "he liderado", sin punto) -->
+<section class="brands" id="marcas">
+  <div class="section-head reveal">
+    <span class="kicker">Mi trabajo</span>
+    <h2>Las marcas donde he trabajado</h2>
+  </div>
+  <div class="brand-grid">
+    <a class="brand-card reveal d1" href="#c1"><div class="logo radar" data-fb="RADAR"></div><div class="yr">2026 — Hoy</div><div class="nm">Somos Radar</div></a>
+    <a class="brand-card reveal d2" href="#c2"><div class="logo bmi-bg" data-fb="BMI"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/5-Favicn-BMISeguros.png" alt="" onerror="this.remove()"></div><div class="yr">2024 — 2025</div><div class="nm">BMI Headquarters</div></a>
+    <a class="brand-card reveal d3" href="#c3"><div class="logo libertyandes-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/4-Favicn-Liberty-Andes.png" alt="" onerror="this.remove()"></div><div class="yr">2020 — 2024</div><div class="nm">Liberty Andes</div></a>
+    <a class="brand-card reveal d4" href="#c4"><div class="logo libertychile-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/3-Favicn-Liberty-Chile.png" alt="" onerror="this.remove()"></div><div class="yr">2018 — 2020</div><div class="nm">Liberty Chile</div></a>
+    <a class="brand-card reveal d5" href="#c5"><div class="logo bbva-bg" data-fb="BBVA"><img src="https://andresgamonal.com/wp-content/uploads/2025/12/Favicn-BBVA-2.jpg.webp" alt="" onerror="this.remove()"></div><div class="yr">2014 — 2018</div><div class="nm">BBVA Chile</div></a>
+    <a class="brand-card reveal d5" href="#c6"><div class="logo santander-bg" data-fb="SANTAN­DER"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/1-Favicon-Santander.png" alt="" onerror="this.remove()"></div><div class="yr">2012 — 2014</div><div class="nm">Santander Chile</div></a>
+  </div>
+</section>
+
+<!-- CASE 01 SOMOS RADAR -->
+<section class="case" id="c1">
+  <div class="case-banner reveal">
+    <div class="brand-l radar" data-fb="RADAR"></div>
+    <div class="meta-l">
+      <div class="case-num">CASO 01 <span class="yr">· 2026 — Actualidad · MX · CL</span></div>
+      <h2>Somos Radar</h2>
+      <p class="role">Marketing & Communications Lead · Soluciones de IA para sector financiero</p>
+    </div>
+  </div>
+  <p class="summary reveal">Construí desde cero la estrategia integral de marketing para una empresa en expansión a dos mercados: objetivos, métricas, research, campañas digitales e incentivos comerciales.</p>
+  <div class="res-head reveal"><span class="bar"></span>Documentos<span class="count">3 PDFs</span></div>
+  <div class="docs">
+    <a class="doc reveal d1" href="https://cdn-gamonal.andresgamonal.com/1.0-gamonal-estudio-contenido.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/fa17367f555ccce76b7cb138b2e695f8798a8547c0d20d525a7c53d1b5c659cecb081674a29e42452ddb4855bf1a5a67391e9a96afda159c919a63_1280.jpg"><span class="tag">PDF</span></div><div><h5>Estudio de efectividad del contenido digital</h5><span class="more">Abrir documento ↗</span></div></a>
+    <a class="doc reveal d2" href="https://cdn-gamonal.andresgamonal.com/1.1-gamonal-ecosistema-digital.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/inventory-management-statistics.jpg"><span class="tag">PDF</span></div><div><h5>Ecosistema de indicadores y estudios de mercado</h5><span class="more">Abrir documento ↗</span></div></a>
+    <a class="doc reveal d3" href="https://cdn-gamonal.andresgamonal.com/1.2-gamonal-metodologia-campa%C3%B1as.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/marketing-strategy.jpg"><span class="tag">PDF</span></div><div><h5>Metodología de campañas de publicidad digital</h5><span class="more">Abrir documento ↗</span></div></a>
+  </div>
+  <div class="back"><a href="#marcas">← Volver a marcas</a></div>
+</section>
+
+<!-- CASE 02 BMI -->
+<section class="case" id="c2">
+  <div class="case-banner reveal">
+    <div class="brand-l bmi-bg" data-fb="BMI"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/5-Favicn-BMISeguros.png" alt="" onerror="this.remove()"></div>
+    <div class="meta-l">
+      <div class="case-num">CASO 02 <span class="yr">· 2024 — 2025 · 5 operaciones LATAM</span></div>
+      <h2>BMI Headquarters</h2>
+      <p class="role">Corporate Marketing Manager · Seguros</p>
+    </div>
+  </div>
+  <p class="summary reveal">Formé un equipo multidisciplinario de marketing para dar servicio integral a 5 operaciones, levantando un ecosistema data-driven y campañas estructuradas.</p>
+  <div class="res-head reveal"><span class="bar"></span>Documentos<span class="count">3 PDFs</span></div>
+  <div class="docs">
+    <a class="doc reveal d1" href="https://cdn-gamonal.andresgamonal.com/1.0-gamonal-estudio-contenido.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/fa17367f555ccce76b7cb138b2e695f8798a8547c0d20d525a7c53d1b5c659cecb081674a29e42452ddb4855bf1a5a67391e9a96afda159c919a63_1280.jpg"><span class="tag">PDF</span></div><div><h5>Estudio de efectividad del contenido digital</h5><span class="more">Abrir documento ↗</span></div></a>
+    <a class="doc reveal d2" href="https://cdn-gamonal.andresgamonal.com/1.1-gamonal-ecosistema-digital.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/inventory-management-statistics.jpg"><span class="tag">PDF</span></div><div><h5>Ecosistema de indicadores y estudios de mercado</h5><span class="more">Abrir documento ↗</span></div></a>
+    <a class="doc reveal d3" href="https://cdn-gamonal.andresgamonal.com/1.2-gamonal-metodologia-campa%C3%B1as.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/marketing-strategy.jpg"><span class="tag">PDF</span></div><div><h5>Metodología de campañas de publicidad digital</h5><span class="more">Abrir documento ↗</span></div></a>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Infografías de mercado<span class="count">4 países</span></div>
+  <div class="flags reveal">
+    <a href="https://cdn-gamonal.andresgamonal.com/1.3-gamonal-colombia-info-mercado.pdf" target="_blank"><img src="https://andresgamonal.com/wp-content/uploads/2026/01/197575-1.png.webp" alt="">Colombia</a>
+    <a href="https://cdn-gamonal.andresgamonal.com/1.4-gamonal-costa-rica-info-mercado.pdf" target="_blank"><img src="https://andresgamonal.com/wp-content/uploads/2026/01/197506-1.png.webp" alt="">Costa Rica</a>
+    <a href="https://cdn-gamonal.andresgamonal.com/1.5-gamonal-ecuador-info-mercado.pdf" target="_blank"><img src="https://andresgamonal.com/wp-content/uploads/2026/01/197588-1.png.webp" alt="">Ecuador</a>
+    <a href="https://cdn-gamonal.andresgamonal.com/1.6-gamonal-dominicana-info-mercado.pdf" target="_blank"><img src="https://andresgamonal.com/wp-content/uploads/2026/01/197619-1.png.webp" alt="">Rep. Dominicana</a>
+  </div>
+  <div class="back"><a href="#marcas">← Volver a marcas</a></div>
+</section>
+
+<!-- CASE 03 LIBERTY ANDES -->
+<section class="case" id="c3">
+  <div class="case-banner reveal">
+    <div class="brand-l libertyandes-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/4-Favicn-Liberty-Andes.png" alt="" onerror="this.remove()"></div>
+    <div class="meta-l">
+      <div class="case-num">CASO 03 <span class="yr">· 2020 — 2024 · CO · EC · DO</span></div>
+      <h2>Liberty Seguros Andes</h2>
+      <p class="role">Regional Marketing Director · Team Leader</p>
+    </div>
+  </div>
+  <p class="summary reveal">Lideré la estrategia regional con foco data-driven en 3 mercados andinos: equipo, agencias y presupuesto multi-país, optimizando funnels de adquisición y retención.</p>
+  <div class="kpis">
+    <div class="kpi reveal d1"><div class="v">−24<sup>%</sup></div><div class="l">Costo por lead</div></div>
+    <div class="kpi reveal d2"><div class="v">+47<sup>K</sup></div><div class="l">Leads incrementales</div></div>
+    <div class="kpi reveal d3"><div class="v">+35<sup>%</sup></div><div class="l">Eficiencia ROI</div></div>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Campañas en video<span class="count">3 piezas</span></div>
+  <div class="vids">
+    <a class="vid reveal d1" href="#" data-video="MS2A0OMGSZI"><img src="https://i.ytimg.com/vi/MS2A0OMGSZI/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Comercial institucional</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d2" href="#" data-video="N53dMq4jT4A"><img src="https://i.ytimg.com/vi/N53dMq4jT4A/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Seguro Aprendo</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d3" href="#" data-video="t7mXy1aPUuE"><img src="https://i.ytimg.com/vi/t7mXy1aPUuE/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Campaña Ecuador</div><div class="yt">▶ YouTube</div></a>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Piezas en audio<span class="count">3 grabaciones</span></div>
+  <div class="auds">
+    <div class="aud reveal d1"><div class="top"><div class="cov"><img src="https://andresgamonal.com/wp-content/uploads/2025/09/Favicon-Liberty.jpg" alt=""></div><div><div class="nm">Venta Digital</div><div class="sub">Radio · Pareja</div></div></div><audio controls preload="none" src="https://cdn-liberty-andes.andresgamonal.com/liberty-andes-co-cotizar-online.mp3"></audio></div>
+    <div class="aud reveal d2"><div class="top"><div class="cov"><img src="https://andresgamonal.com/wp-content/uploads/2025/09/Favicon-Liberty.jpg" alt=""></div><div><div class="nm">Ed. Financiera</div><div class="sub">Podcast 1/14</div></div></div><audio controls preload="none" src="https://cdn-liberty-andes.andresgamonal.com/liberty-andes-educacion-financiera-podcast-II.mp3"></audio></div>
+    <div class="aud reveal d3"><div class="top"><div class="cov"><img src="https://andresgamonal.com/wp-content/uploads/2025/09/Favicon-Liberty.jpg" alt=""></div><div><div class="nm">Promo (EC)</div><div class="sub">Buenas Noticias</div></div></div><audio controls preload="none" src="https://cdn-liberty-andes.andresgamonal.com/liberty-andes-ec-buenas-noticias.mp3"></audio></div>
+  </div>
+  <div class="back"><a href="#marcas">← Volver a marcas</a></div>
+</section>
+
+<!-- CASE 04 LIBERTY CHILE -->
+<section class="case" id="c4">
+  <div class="case-banner reveal">
+    <div class="brand-l libertychile-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/3-Favicn-Liberty-Chile.png" alt="" onerror="this.remove()"></div>
+    <div class="meta-l">
+      <div class="case-num">CASO 04 <span class="yr">· 2018 — 2020 · Chile</span></div>
+      <h2>Liberty Seguros Chile</h2>
+      <p class="role">Brand &amp; Digital Communication Manager</p>
+    </div>
+  </div>
+  <p class="summary reveal">Comunicación de marca y performance digital local con foco en recordación y conversión, liderando agencias creativas y de medios.</p>
+  <div class="kpis">
+    <div class="kpi reveal d1"><div class="v">Top<sup>2</sup></div><div class="l">Recordación de marca</div></div>
+    <div class="kpi reveal d2"><div class="v">Top<sup>1</sup></div><div class="l">Marca digital del sector</div></div>
+    <div class="kpi reveal d3"><div class="v">+28<sup>%</sup></div><div class="l">Engagement digital</div></div>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Campañas en video<span class="count">3 piezas</span></div>
+  <div class="vids">
+    <a class="vid reveal d1" href="#" data-video="Ss3IV85bCRE"><img src="https://i.ytimg.com/vi/Ss3IV85bCRE/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Tiempo I — Primera campaña</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d2" href="#" data-video="Eh6nKOqkT58"><img src="https://i.ytimg.com/vi/Eh6nKOqkT58/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Tiempo II</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d3" href="#" data-video="y8mVJryKLTg"><img src="https://i.ytimg.com/vi/y8mVJryKLTg/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Aliro Seguros</div><div class="yt">▶ YouTube</div></a>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Piezas en audio<span class="count">3 grabaciones</span></div>
+  <div class="auds">
+    <div class="aud reveal d1"><div class="top"><div class="cov"><img src="https://andresgamonal.com/wp-content/uploads/2025/09/Favicon-Liberty.jpg" alt=""></div><div><div class="nm">Digital</div><div class="sub">Denuncio WEB</div></div></div><audio controls preload="none" src="https://cdn-liberty-chile.andresgamonal.com/liberty-cl-denuncio-online-amigas.mp3"></audio></div>
+    <div class="aud reveal d2"><div class="top"><div class="cov"><img src="https://andresgamonal.com/wp-content/uploads/2025/09/Favicon-Liberty.jpg" alt=""></div><div><div class="nm">Digital</div><div class="sub">Pago online</div></div></div><audio controls preload="none" src="https://cdn-liberty-chile.andresgamonal.com/liberty-cl-pago-cuota-online.mp3"></audio></div>
+    <div class="aud reveal d3"><div class="top"><div class="cov"><img src="https://andresgamonal.com/wp-content/uploads/2025/09/Favicon-Liberty.jpg" alt=""></div><div><div class="nm">Brand</div><div class="sub">Presente</div></div></div><audio controls preload="none" src="https://cdn-liberty-chile.andresgamonal.com/liberty-cl-institucional-presente.mp3"></audio></div>
+  </div>
+  <div class="back"><a href="#marcas">← Volver a marcas</a></div>
+</section>
+
+<!-- CASE 05 BBVA (6 videos + 3 audios) -->
+<section class="case" id="c5">
+  <div class="case-banner reveal">
+    <div class="brand-l bbva-bg" data-fb="BBVA"><img src="https://andresgamonal.com/wp-content/uploads/2025/12/Favicn-BBVA-2.jpg.webp" alt="" onerror="this.remove()"></div>
+    <div class="meta-l">
+      <div class="case-num">CASO 05 <span class="yr">· 2014 — 2018 · Chile</span></div>
+      <h2>Banco BBVA Chile</h2>
+      <p class="role">Sr. Brand &amp; Digital Performance Manager · Banca</p>
+    </div>
+  </div>
+  <p class="summary reveal">Estrategia integrada de marca y performance digital con resultados premiados: <b style="color:var(--blue);font-weight:700">Effie de Bronce 2017</b> por campaña con métrica de marca y performance.</p>
+  <div class="kpis">
+    <div class="kpi reveal d1"><div class="v">Effie</div><div class="l">Bronce — 2017</div></div>
+    <div class="kpi reveal d2"><div class="v">+10<sup>%</sup></div><div class="l">Share of voice</div></div>
+    <div class="kpi reveal d3"><div class="v">1<sup>er</sup></div><div class="l">Premio campaña</div></div>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Campañas en video<span class="count">6 piezas</span></div>
+  <div class="vids">
+    <a class="vid reveal d1" href="#" data-video="fVC_jjASIeE"><img src="https://i.ytimg.com/vi/fVC_jjASIeE/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Funcionalidades II: Cuenta</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d2" href="#" data-video="6n13T7QNe0Q"><img src="https://i.ytimg.com/vi/6n13T7QNe0Q/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">BBVA Wallet: Pago</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d3" href="#" data-video="Jh-yhz41sXs"><img src="https://i.ytimg.com/vi/Jh-yhz41sXs/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">BBVA Wallet: Bloqueo</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d1" href="#" data-video="evTmddCpSfw"><img src="https://i.ytimg.com/vi/evTmddCpSfw/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Crédito Consumo Online</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d2" href="#" data-video="-IOv2BKvy7E"><img src="https://i.ytimg.com/vi/-IOv2BKvy7E/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Crédito Consumo por APP</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d3" href="#" data-video="G_M7SPX8yvM"><img src="https://i.ytimg.com/vi/G_M7SPX8yvM/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Estudio Crossmedia con Google</div><div class="yt">▶ YouTube</div></a>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Piezas en audio<span class="count">3 grabaciones</span></div>
+  <div class="auds">
+    <div class="aud reveal d1"><div class="top"><div class="cov" style="background:#072146">BBVA</div><div><div class="nm">Tarjetas</div><div class="sub">Días Blue</div></div></div><audio controls preload="none" src="https://cdn-bbva.andresgamonal.com/bbva-dias-blue.mp3"></audio></div>
+    <div class="aud reveal d2"><div class="top"><div class="cov" style="background:#072146">BBVA</div><div><div class="nm">Brand</div><div class="sub">Promo Bravo</div></div></div><audio controls preload="none" src="https://cdn-bbva.andresgamonal.com/bbva-institucional-bravo.mp3"></audio></div>
+    <div class="aud reveal d3"><div class="top"><div class="cov" style="background:#072146">BBVA</div><div><div class="nm">Consumo</div><div class="sub">Crédito APP</div></div></div><audio controls preload="none" src="https://cdn-bbva.andresgamonal.com/bbva-credito-go.mp3"></audio></div>
+  </div>
+  <div class="back"><a href="#marcas">← Volver a marcas</a></div>
+</section>
+
+<!-- CASE 06 SANTANDER (3 entregables + KPIs corregidos) -->
+<section class="case" id="c6">
+  <div class="case-banner reveal">
+    <div class="brand-l santander-bg" data-fb="SANTAN­DER"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/1-Favicon-Santander.png" alt="" onerror="this.remove()"></div>
+    <div class="meta-l">
+      <div class="case-num">CASO 06 <span class="yr">· 2012 — 2014 · Chile</span></div>
+      <h2>Banco Santander Chile</h2>
+      <p class="role">Sustainability &amp; Project Manager · Banca · Programa Sanodelucas</p>
+    </div>
+  </div>
+  <p class="summary reveal">Coordinación del programa Sanodelucas y otras iniciativas de sustentabilidad, con impacto en beneficiarios, posicionamiento DJSI y reconocimiento del BID por aporte al desarrollo del país.</p>
+  <div class="kpis">
+    <div class="kpi reveal d1"><div class="v">+17<sup>K</sup></div><div class="l">Fans en Facebook · Sanodelucas</div></div>
+    <div class="kpi reveal d2"><div class="v">Top<sup>5</sup></div><div class="l">Ranking Nacional de RSE</div></div>
+    <div class="kpi reveal d3"><div class="v">BID</div><div class="l">Banco Interamericano premia Sanodelucas</div></div>
+  </div>
+  <div class="res-head reveal"><span class="bar"></span>Entregables destacados<span class="count">3 piezas</span></div>
+  <div class="vids">
+    <a class="vid reveal d1" href="#" data-video="6f98qMrhhnw"><img src="https://i.ytimg.com/vi/6f98qMrhhnw/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Sanodelucas Personas (1/12)</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d2" href="#" data-video="df1NKs_FD3o"><img src="https://i.ytimg.com/vi/df1NKs_FD3o/hqdefault.jpg" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="cap">Sanodelucas Pyme</div><div class="yt">▶ YouTube</div></a>
+    <a class="vid reveal d3" href="https://cdn-santander.andresgamonal.com/5.0-santander-sanodelucas-guia.pdf" target="_blank"><img src="https://andresgamonal.com/wp-content/uploads/2025/12/SNDL-Portada-2.png.webp" alt=""><div class="play"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg></div><div class="cap">Guía de comportamiento financiero</div><div class="yt">📕 PDF</div></a>
+  </div>
+  <div class="back"><a href="#marcas">← Volver a marcas</a></div>
+</section>
+
+<!-- VIDEO MODAL universal -->
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="vmodal-bg" data-close></div>
+  <div class="vmodal-inner">
+    <button class="vmodal-x" data-close aria-label="Cerrar">✕</button>
+    <div class="vmodal-frame"><iframe id="vmodal-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe></div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<section class="close" id="contact">
+  <div class="close-inner">
+    <span class="kicker reveal">Disponible · Q3 2026</span>
+    <h2 class="reveal d1">¿Buscas un líder<br>de marketing para <span class="g">tu equipo?</span></h2>
+    <p class="reveal d2">Estoy abierto a nuevas oportunidades en marketing integrado, branding y performance — full-time, fraccional o por proyecto.</p>
+    <div class="close-ctas">
+      <a class="ctap reveal d3" href="mailto:hola@andresgamonal.com?subject=Oportunidad laboral">Escríbeme por correo →</a>
+      <a class="ctas reveal d4" href="https://cdn-cv.andresgamonal.com/cv-a-gamonal-diciembre-2025.pdf" target="_blank">Descargar CV ↓</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 · Andrés Gamonal · Brandformance Lab · <a href="https://andresgamonal.com/sobre-mi/" target="_blank">Sitio original</a></footer>
+
+<script>
+  // Reveal on scroll
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:0.10,rootMargin:'0px 0px -20px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Modal de video universal
+  const vmodal=document.getElementById('vmodal');
+  const vframe=document.getElementById('vmodal-iframe');
+  function openVideo(id){
+    // Cierra el drawer u otra sección con :target si está abierta
+    if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+    vframe.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    vmodal.classList.add('open');
+    vmodal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function closeVideo(){
+    vframe.src='';
+    vmodal.classList.remove('open');
+    vmodal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+  document.querySelectorAll('[data-video]').forEach(el=>{
+    el.addEventListener('click',e=>{
+      e.preventDefault();
+      openVideo(el.dataset.video);
+    });
+  });
+  vmodal.querySelectorAll('[data-close]').forEach(el=>{
+    el.addEventListener('click',closeVideo);
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape' && vmodal.classList.contains('open')) closeVideo();
+  });
+</script>
+
+</body>
+</html>
