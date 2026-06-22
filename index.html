@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
 <title>Andrés Gamonal — Brandformance Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +29,7 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:'Roboto',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{font-family:'Roboto',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.4;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
@@ -39,7 +41,7 @@
   /* ── NAV (solo logo, sin menú) ─────────────────── */
   .nav{position:sticky;top:0;left:0;right:0;z-index:80;background:#fff;border-bottom:1px solid var(--line);width:100%}
   .nav-row{max-width:var(--max);margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:flex-start;gap:12px}
-  .nav-logo img{height:38px;width:auto;display:block}
+  .nav-logo img{height:48px;width:auto;display:block}
 
   /* ── FAB lateral SOLO cuando hay espacio (>1400px) — afuera del contenido ─────── */
   .fab{display:none}
@@ -63,13 +65,14 @@
   .slide-meta{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-size:12px;font-weight:500;margin-bottom:24px;color:#fff;width:fit-content}
   .slide-meta .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan)}
   .slide h1{font-weight:900;font-size:clamp(38px,5.5vw,76px);line-height:1;margin:0 0 22px;color:#fff;letter-spacing:-.01em}
-  .slide .lead{font-size:clamp(15px,1.4vw,18px);color:rgba(255,255,255,.92);max-width:540px;margin:0 0 32px;line-height:1.6}
+  .slide .lead{font-size:clamp(15px,1.4vw,18px);color:rgba(255,255,255,.92);max-width:540px;margin:0 0 32px;line-height:1.45}
   .slide-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:#fff;color:var(--navy);border-radius:999px;font-weight:600;font-size:15px;transition:all .2s}
   .slide-cta:hover{background:var(--cyan);transform:translateY(-2px)}
   .slide-sign{margin-top:36px;display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.65);font-size:13px}
   .slide-sign::before{content:'';width:24px;height:1px;background:rgba(255,255,255,.40)}
   .slide-sign b{color:#fff;font-weight:700;margin-right:4px}
-  .slide-img{aspect-ratio:1/1;border-radius:24px;overflow:hidden;background-size:cover;background-position:center;max-width:380px;justify-self:end;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .slide-card{width:100%;max-width:480px;aspect-ratio:4/3;justify-self:end;background:#fff;border-radius:24px;padding:20px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .slide-img{width:100%;height:100%;object-fit:contain;border-radius:6px;display:block}
 
   .slider-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
   .slider-dots label{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:all .25s}
@@ -81,7 +84,7 @@
     .slide-wrap{grid-template-columns:1fr;gap:28px;text-align:center}
     .slide-meta{margin:0 auto 22px}
     .slide .lead{margin:0 auto 28px}
-    .slide-img{order:-1;max-width:240px;margin:0 auto;justify-self:center}
+    .slide-card{order:-1;max-width:300px;margin:0 auto;justify-self:center}
     .slide h1{font-size:38px}
     .slide-sign{justify-content:center}
   }
@@ -117,17 +120,17 @@
   }
 
   /* ── ABOUT (texto ancho usando laterales) ── */
-  .about{padding:96px 0;background:#fff}
+  .about{padding:104px 0;background:#fff}
   .about-head{margin-bottom:48px;text-align:center}
   .about-head .kicker{display:inline-block;padding:5px 14px;background:rgba(0,113,206,.10);color:var(--blue);font-size:12px;font-weight:700;border-radius:999px;margin-bottom:14px}
   .about-head h2{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1;margin:0;color:var(--ink)}
-  .about-body{max-width:980px;margin:0 auto;padding:0 24px;font-size:clamp(17px,1.7vw,19px);line-height:1.7;color:var(--ink)}
-  .about-body p{margin:0 0 22px;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+  .about-body{max-width:980px;margin:0 auto;padding:0 24px;font-size:clamp(17px,1.7vw,19px);line-height:1.3;color:var(--ink)}
+  .about-body p{margin:0 0 20px;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
   .about-body p:last-child{margin-bottom:0}
   .about-body b{font-weight:700;color:var(--blue)}
 
   /* ── MARCAS ──────────────────────────── */
-  .brands{padding:80px 0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .brands{padding:96px 0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .section-head{text-align:center;margin-bottom:40px}
   .section-head .kicker{display:inline-block;padding:5px 14px;background:rgba(0,113,206,.10);color:var(--blue);font-size:12px;font-weight:700;border-radius:999px;margin-bottom:14px}
   .section-head h2{font-size:clamp(32px,4.5vw,52px);font-weight:900;line-height:1;margin:0;color:var(--ink)}
@@ -137,7 +140,7 @@
   .brand-card .logo{width:54px;height:54px;border-radius:12px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
   .brand-card .logo::before{content:attr(data-fb);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px;letter-spacing:.3px;text-align:center;padding:4px}
   .brand-card .logo img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
-  .brand-card .logo.radar{background:var(--navy);color:#fff;font-weight:900;font-size:12px}
+  .brand-card .logo.radar{background:#222F47}
   .brand-card .logo.bmi-bg{background:#072146}
   .brand-card .logo.libertyandes-bg{background:#FFD500}
   .brand-card .logo.libertyandes-bg::before{color:#000}
@@ -151,13 +154,13 @@
   @media(max-width:480px){.brand-grid{grid-template-columns:repeat(2,1fr)}}
 
   /* ── CASE ────────────────────────────── */
-  .case{padding:72px 0;border-bottom:1px solid var(--line)}
+  .case{padding:96px 0;border-bottom:1px solid var(--line)}
   .case:nth-of-type(even){background:var(--bg)}
   .case-banner{max-width:var(--max);margin:0 auto 32px;padding:0 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
   .case-banner .brand-l{flex-shrink:0;width:72px;height:72px;border-radius:16px;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);position:relative}
   .case-banner .brand-l::before{content:attr(data-fb);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.3px;text-align:center;padding:4px;line-height:1.1}
   .case-banner .brand-l img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
-  .case-banner .brand-l.radar{background:var(--navy);color:#fff;font-weight:900;font-size:14px}
+  .case-banner .brand-l.radar{background:#222F47}
   .case-banner .brand-l.bmi-bg{background:#072146}
   .case-banner .brand-l.libertyandes-bg{background:#FFD500}
   .case-banner .brand-l.libertyandes-bg::before{color:#000}
@@ -165,12 +168,15 @@
   .case-banner .brand-l.libertychile-bg::before{color:#000}
   .case-banner .brand-l.bbva-bg{background:#004481}
   .case-banner .brand-l.santander-bg{background:#EC0000}
+  .brand-card .logo.radar::before,.case-banner .brand-l.radar::before{content:none}
+  .brand-card .logo.radar .radar-logo{width:auto;height:auto;max-width:84%;max-height:62%;object-fit:contain;position:relative;z-index:2}
+  .case-banner .brand-l.radar .radar-logo{width:auto;height:auto;max-width:82%;max-height:60%;object-fit:contain;position:relative;z-index:2}
   .case-banner .meta-l{flex:1;min-width:0}
   .case-num{display:inline-flex;align-items:center;gap:12px;padding:4px 12px;background:rgba(0,113,206,.10);color:var(--blue);font-size:11px;font-weight:700;border-radius:999px;margin-bottom:10px}
   .case-num .yr{color:var(--ink);font-weight:500}
   .case h2{font-size:clamp(28px,4vw,52px);font-weight:900;line-height:1;margin:0 0 8px;color:var(--ink)}
   .case .role{font-size:14px;color:var(--soft);font-weight:500;margin:0}
-  .case .summary{max-width:880px;margin:0 auto 36px;padding:0 20px;font-size:clamp(15px,1.4vw,18px);line-height:1.55;color:var(--ink)}
+  .case .summary{max-width:var(--max);margin:0 auto 40px;padding:0 20px;font-size:clamp(15px,1.4vw,18px);line-height:1.3;color:var(--ink);text-align:justify;hyphens:auto;-webkit-hyphens:auto}
 
   /* KPIs */
   .kpis{max-width:var(--max);margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -285,14 +291,31 @@
 </head>
 <body id="top">
 
-<!-- NAV (solo logo) -->
+<!--
+  GUÍA RÁPIDA DE EDICIÓN
+  ..........................................................................
+  • Cada sección tiene un título grande marcado con ═══════ y su nombre
+    (ej. "CASO 05 · BBVA"). Usa Ctrl+F y escribe el nombre para saltar a ella.
+  • Para cambiar un TEXTO: edita SOLO lo que está entre las etiquetas, sin
+    tocar las etiquetas. Ej:  <p class="summary ...">AQUÍ VA EL TEXTO</p>
+  • TARJETAS DE RESULTADOS (las cifras de cada caso):
+        class="v"  →  el número grande (ej. +10%)
+        class="l"  →  la etiqueta de abajo (ej. Share of voice)
+    Cambia solo el número y la etiqueta.
+  • No toques la sección <style> (colores y diseño) ni la VENTANA DE VIDEO.
+  • Para publicar: sube este archivo al repositorio de GitHub y
+    Cloudflare actualiza book.gamonal.app automáticamente.
+-->
+
+
+<!-- ═══════════════ MENÚ SUPERIOR (logo) ═══════════════ -->
 <nav class="nav">
   <div class="nav-row">
     <a class="nav-logo" href="#top"><img src="https://andresgamonal.com/wp-content/uploads/2025/12/Logo-Gamonal-Azul-Rey-1.png" alt="Gamonal"></a>
   </div>
 </nav>
 
-<!-- FAB -->
+<!-- ═══════ BARRA LATERAL FLOTANTE (WhatsApp · correo · LinkedIn · CV) ═══════ -->
 <div class="fab">
   <a href="https://wa.me/525531333539" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-1 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5l-.8 4 4-.8c1.4.8 3 1.2 4.5 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
   <a href="mailto:hola@andresgamonal.com?subject=Oportunidad laboral" aria-label="Correo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
@@ -300,7 +323,7 @@
   <a href="https://cdn-cv.andresgamonal.com/cv-a-gamonal-diciembre-2025.pdf" target="_blank" aria-label="CV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></a>
 </div>
 
-<!-- HERO con SLIDER (UN solo CTA + firma) -->
+<!-- ═══════════════ PORTADA / CARRUSEL (2 láminas) ═══════════════ -->
 <section class="hero-section">
   <div class="slider">
     <input type="radio" name="hero" id="s1" checked>
@@ -315,7 +338,7 @@
             <a class="slide-cta" href="#" data-video="rW8XFN3lRM8"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Ver video</a>
             <div class="slide-sign"><span><b>Andrés Gamonal</b> · Marketing & Communications · LATAM</span></div>
           </div>
-          <div class="slide-img" style="background-image:url('https://andresgamonal.com/wp-content/uploads/2025/12/FotoBrandformance.png.webp')"></div>
+          <div class="slide-card"><img class="slide-img" src="https://andresgamonal.com/wp-content/uploads/2025/12/FotoBrandformance.png.webp" alt="Brandformance" loading="eager"></div>
         </div>
       </div>
       <div class="slide slide-2">
@@ -327,7 +350,7 @@
             <a class="slide-cta" href="https://cdn-cv.andresgamonal.com/certificaciones-gamonal-2025-26.pdf" target="_blank">Conoce aquí →</a>
             <div class="slide-sign"><span><b>Google · LinkedIn · HubSpot</b> · 2026</span></div>
           </div>
-          <div class="slide-img" style="background-image:url('https://andresgamonal.com/wp-content/uploads/2025/11/Certificaciones-con-logos.jpg.webp')"></div>
+          <div class="slide-card"><img class="slide-img" src="https://andresgamonal.com/wp-content/uploads/2025/11/Certificaciones-con-logos.jpg.webp" alt="Certificaciones digitales 2026" loading="eager"></div>
         </div>
       </div>
     </div>
@@ -338,7 +361,7 @@
   </div>
 </section>
 
-<!-- STATS rediseñados con iconos -->
+<!-- ═══════════════ CIFRAS (15+ años, 6 mercados, etc.) ═══════════════ -->
 <section class="stats">
   <div class="stats-grid">
     <div class="stat reveal d1">
@@ -360,7 +383,7 @@
   </div>
 </section>
 
-<!-- DISCIPLINAS marquee (reemplaza marcas) -->
+<!-- ═══════════════ DISCIPLINAS (cinta en movimiento) ═══════════════ -->
 <section class="disciplines">
   <div class="disc-track">
     <div class="disc-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Estrategia de marca</div>
@@ -381,27 +404,28 @@
   </div>
 </section>
 
-<!-- ABOUT (sin punto, ancho 980px) -->
+<!-- ═══════════════ SOBRE MÍ (texto de presentación) ═══════════════ -->
 <section class="about" id="about">
   <div class="about-head reveal">
     <span class="kicker">Sobre mí</span>
     <h2>Marketing integrado al negocio</h2>
   </div>
+  <!-- ▼ TEXTO de Sobre mí (3 párrafos) -->
   <div class="about-body reveal">
-    <p>Ejecutivo senior de marketing con más de 15 años de trayectoria liderando estrategias de crecimiento en compañías multinacionales. Formación en agencias de publicidad y carrera consolidada desde la posición del cliente, con experiencia en liderazgo de equipos internos y gestión de agencias de publicidad y medios en entornos B2C y B2B, principalmente en servicios financieros y seguros. <b>Ganador de un Effie de Bronce</b> (2017) por una campaña de marca y performance.</p>
-    <p>Enfoque de marketing integrado al negocio que articula estrategia, ejecución y análisis en función de los objetivos del negocio y de la marca, integrando <b>branding, performance digital, publicidad, medios tradicionales,</b> redes sociales y experiencia del consumidor, con soporte en datos, investigación y métricas.</p>
-    <p>Tanto en roles de colaborador como de liderazgo, mi forma de trabajo se sustenta en la convicción de que el <b>conocimiento no tiene límites</b>, lo que me lleva a identificar, aprovechar o crear oportunidades que generen valor real para la compañía, fortalezcan la colaboración e inspiren los entornos donde me desempeño.</p>
+    <p>Trabajo el marketing desde la intersección entre <b>negocio, marca y ejecución</b>. Tengo más de 15 años de experiencia en compañías multinacionales y agencias de publicidad, principalmente en servicios financieros, seguros y tecnología, liderando estrategias B2B/B2C, equipos internos, agencias creativas y medios. Mi trayectoria combina campañas regionales, brandformance, investigación de mercado, publicidad masiva, performance digital, vocerías ejecutivas y medición de resultados; fui reconocido con un <b>Effie de Bronce en 2017</b> por una campaña de marca y performance.</p>
+    <p>Entiendo el marketing como una <b>función comercial, no solo comunicacional</b>: una disciplina que debe ordenar objetivos, conectar audiencias, construir reputación, generar demanda y demostrar impacto. Mi forma de trabajo integra diagnóstico, research, métricas, creatividad, medios tradicionales, canales digitales y seguimiento comercial para transformar objetivos de marca y negocio en campañas, contenidos y acciones medibles.</p>
+    <p>En mi etapa más reciente he incorporado <b>inteligencia artificial generativa</b> como una herramienta real de gestión: no solo para crear contenidos, sino para analizar información, automatizar procesos, construir soluciones propias y fortalecer la ejecución diaria de marketing, reporting, SEO/GEO, investigación, campañas y toma de decisiones. Me interesa convertir tecnología en aplicaciones concretas que mejoren la eficiencia, la calidad del análisis y la capacidad de respuesta del área.</p>
   </div>
 </section>
 
-<!-- MARCAS (sin "he liderado", sin punto) -->
+<!-- ═══════════════ MARCAS (grilla de logos) ═══════════════ -->
 <section class="brands" id="marcas">
   <div class="section-head reveal">
     <span class="kicker">Mi trabajo</span>
     <h2>Las marcas donde he trabajado</h2>
   </div>
   <div class="brand-grid">
-    <a class="brand-card reveal d1" href="#c1"><div class="logo radar" data-fb="RADAR"></div><div class="yr">2026 — Hoy</div><div class="nm">Somos Radar</div></a>
+    <a class="brand-card reveal d1" href="#c1"><div class="logo radar"><img class="radar-logo" src="https://pub-38d62415007c40b4a340ba6c07e74cca.r2.dev/logo-radar/radar-logotipo-blanco.png" alt="Radar"></div><div class="yr">2026 — Hoy</div><div class="nm">Somos Radar</div></a>
     <a class="brand-card reveal d2" href="#c2"><div class="logo bmi-bg" data-fb="BMI"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/5-Favicn-BMISeguros.png" alt="" onerror="this.remove()"></div><div class="yr">2024 — 2025</div><div class="nm">BMI Headquarters</div></a>
     <a class="brand-card reveal d3" href="#c3"><div class="logo libertyandes-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/4-Favicn-Liberty-Andes.png" alt="" onerror="this.remove()"></div><div class="yr">2020 — 2024</div><div class="nm">Liberty Andes</div></a>
     <a class="brand-card reveal d4" href="#c4"><div class="logo libertychile-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/3-Favicn-Liberty-Chile.png" alt="" onerror="this.remove()"></div><div class="yr">2018 — 2020</div><div class="nm">Liberty Chile</div></a>
@@ -410,17 +434,18 @@
   </div>
 </section>
 
-<!-- CASE 01 SOMOS RADAR -->
+<!-- ═══════════════ CASO 01 · SOMOS RADAR ═══════════════ -->
 <section class="case" id="c1">
   <div class="case-banner reveal">
-    <div class="brand-l radar" data-fb="RADAR"></div>
+    <div class="brand-l radar"><img class="radar-logo" src="https://pub-38d62415007c40b4a340ba6c07e74cca.r2.dev/logo-radar/radar-logotipo-blanco.png" alt="Radar"></div>
     <div class="meta-l">
       <div class="case-num">CASO 01 <span class="yr">· 2026 — Actualidad · MX · CL</span></div>
       <h2>Somos Radar</h2>
       <p class="role">Marketing & Communications Lead · Soluciones de IA para sector financiero</p>
     </div>
   </div>
-  <p class="summary reveal">Construí desde cero la estrategia integral de marketing para una empresa en expansión a dos mercados: objetivos, métricas, research, campañas digitales e incentivos comerciales.</p>
+  <!-- ▼ TEXTO de este caso (edita entre las etiquetas) -->
+  <p class="summary reveal">Construir y liderar la estrategia de marketing B2B de Radar, conectando objetivos comerciales, posicionamiento corporativo, vocerías ejecutivas, campañas digitales, research y soluciones propias desarrolladas con inteligencia artificial, para fortalecer la generación de demanda, la visibilidad de la compañía y la eficiencia de la gestión de marketing.</p>
   <div class="res-head reveal"><span class="bar"></span>Documentos<span class="count">3 PDFs</span></div>
   <div class="docs">
     <a class="doc reveal d1" href="https://cdn-gamonal.andresgamonal.com/1.0-gamonal-estudio-contenido.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/fa17367f555ccce76b7cb138b2e695f8798a8547c0d20d525a7c53d1b5c659cecb081674a29e42452ddb4855bf1a5a67391e9a96afda159c919a63_1280.jpg"><span class="tag">PDF</span></div><div><h5>Estudio de efectividad del contenido digital</h5><span class="more">Abrir documento ↗</span></div></a>
@@ -430,7 +455,7 @@
   <div class="back"><a href="#marcas">← Volver a marcas</a></div>
 </section>
 
-<!-- CASE 02 BMI -->
+<!-- ═══════════════ CASO 02 · BMI ═══════════════ -->
 <section class="case" id="c2">
   <div class="case-banner reveal">
     <div class="brand-l bmi-bg" data-fb="BMI"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/5-Favicn-BMISeguros.png" alt="" onerror="this.remove()"></div>
@@ -440,7 +465,8 @@
       <p class="role">Corporate Marketing Manager · Seguros</p>
     </div>
   </div>
-  <p class="summary reveal">Formé un equipo multidisciplinario de marketing para dar servicio integral a 5 operaciones, levantando un ecosistema data-driven y campañas estructuradas.</p>
+  <!-- ▼ TEXTO de este caso (edita entre las etiquetas) -->
+  <p class="summary reveal">Construir una estrategia integral de marketing a partir del diagnóstico del área, integrando objetivos cuantitativos, métricas y research, campañas digitales y tradicionales estructuradas, un ecosistema de medición y un plan de incentivos comerciales orientado a venta, retención y crecimiento del negocio.</p>
   <div class="res-head reveal"><span class="bar"></span>Documentos<span class="count">3 PDFs</span></div>
   <div class="docs">
     <a class="doc reveal d1" href="https://cdn-gamonal.andresgamonal.com/1.0-gamonal-estudio-contenido.pdf" target="_blank"><div class="thumb"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/fa17367f555ccce76b7cb138b2e695f8798a8547c0d20d525a7c53d1b5c659cecb081674a29e42452ddb4855bf1a5a67391e9a96afda159c919a63_1280.jpg"><span class="tag">PDF</span></div><div><h5>Estudio de efectividad del contenido digital</h5><span class="more">Abrir documento ↗</span></div></a>
@@ -457,7 +483,7 @@
   <div class="back"><a href="#marcas">← Volver a marcas</a></div>
 </section>
 
-<!-- CASE 03 LIBERTY ANDES -->
+<!-- ═══════════════ CASO 03 · LIBERTY ANDES ═══════════════ -->
 <section class="case" id="c3">
   <div class="case-banner reveal">
     <div class="brand-l libertyandes-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/4-Favicn-Liberty-Andes.png" alt="" onerror="this.remove()"></div>
@@ -467,7 +493,9 @@
       <p class="role">Regional Marketing Director · Team Leader</p>
     </div>
   </div>
-  <p class="summary reveal">Lideré la estrategia regional con foco data-driven en 3 mercados andinos: equipo, agencias y presupuesto multi-país, optimizando funnels de adquisición y retención.</p>
+  <!-- ▼ TEXTO de este caso (edita entre las etiquetas) -->
+  <p class="summary reveal">Replantear la estrategia de marca y performance digital B2B/B2C para Colombia, Chile y Ecuador, incorporando una metodología publicitaria basada en métricas y research, orientada a impulsar resultados comerciales tanto en ventas intermediadas como en el nuevo canal digital.</p>
+  <!-- ▼ TARJETAS DE RESULTADOS · v = número · l = etiqueta -->
   <div class="kpis">
     <div class="kpi reveal d1"><div class="v">−24<sup>%</sup></div><div class="l">Costo por lead</div></div>
     <div class="kpi reveal d2"><div class="v">+47<sup>K</sup></div><div class="l">Leads incrementales</div></div>
@@ -488,7 +516,7 @@
   <div class="back"><a href="#marcas">← Volver a marcas</a></div>
 </section>
 
-<!-- CASE 04 LIBERTY CHILE -->
+<!-- ═══════════════ CASO 04 · LIBERTY CHILE ═══════════════ -->
 <section class="case" id="c4">
   <div class="case-banner reveal">
     <div class="brand-l libertychile-bg" data-fb="LIBERTY"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/3-Favicn-Liberty-Chile.png" alt="" onerror="this.remove()"></div>
@@ -498,7 +526,9 @@
       <p class="role">Brand &amp; Digital Communication Manager</p>
     </div>
   </div>
-  <p class="summary reveal">Comunicación de marca y performance digital local con foco en recordación y conversión, liderando agencias creativas y de medios.</p>
+  <!-- ▼ TEXTO de este caso (edita entre las etiquetas) -->
+  <p class="summary reveal">Posicionar a Liberty Seguros Chile en el mercado local, incorporando por primera vez publicidad masiva en sus campañas y preparando su apertura hacia el cliente final, concretada con el lanzamiento y gestión de Aliro Seguros, primera marca low cost de la categoría.</p>
+  <!-- ▼ TARJETAS DE RESULTADOS · v = número · l = etiqueta -->
   <div class="kpis">
     <div class="kpi reveal d1"><div class="v">Top<sup>2</sup></div><div class="l">Recordación de marca</div></div>
     <div class="kpi reveal d2"><div class="v">Top<sup>1</sup></div><div class="l">Marca digital del sector</div></div>
@@ -519,7 +549,7 @@
   <div class="back"><a href="#marcas">← Volver a marcas</a></div>
 </section>
 
-<!-- CASE 05 BBVA (6 videos + 3 audios) -->
+<!-- ═══════════════ CASO 05 · BBVA ═══════════════ -->
 <section class="case" id="c5">
   <div class="case-banner reveal">
     <div class="brand-l bbva-bg" data-fb="BBVA"><img src="https://andresgamonal.com/wp-content/uploads/2025/12/Favicn-BBVA-2.jpg.webp" alt="" onerror="this.remove()"></div>
@@ -529,7 +559,9 @@
       <p class="role">Sr. Brand &amp; Digital Performance Manager · Banca</p>
     </div>
   </div>
-  <p class="summary reveal">Estrategia integrada de marca y performance digital con resultados premiados: <b style="color:var(--blue);font-weight:700">Effie de Bronce 2017</b> por campaña con métrica de marca y performance.</p>
+  <!-- ▼ TEXTO de este caso (edita entre las etiquetas) -->
+  <p class="summary reveal">Desarrollar e implementar un modelo de campañas de brandformance, que integró estrategia de marca, oferta comercial, medios offline, canales digitales y embajador local, impulsando la captación de nuevos clientes y el posicionamiento de productos y servicios del banco.</p>
+  <!-- ▼ TARJETAS DE RESULTADOS · v = número · l = etiqueta -->
   <div class="kpis">
     <div class="kpi reveal d1"><div class="v">Effie</div><div class="l">Bronce — 2017</div></div>
     <div class="kpi reveal d2"><div class="v">+10<sup>%</sup></div><div class="l">Share of voice</div></div>
@@ -553,7 +585,7 @@
   <div class="back"><a href="#marcas">← Volver a marcas</a></div>
 </section>
 
-<!-- CASE 06 SANTANDER (3 entregables + KPIs corregidos) -->
+<!-- ═══════════════ CASO 06 · SANTANDER ═══════════════ -->
 <section class="case" id="c6">
   <div class="case-banner reveal">
     <div class="brand-l santander-bg" data-fb="SANTAN­DER"><img src="https://andresgamonal.com/wp-content/uploads/2025/11/1-Favicon-Santander.png" alt="" onerror="this.remove()"></div>
@@ -563,7 +595,9 @@
       <p class="role">Sustainability &amp; Project Manager · Banca · Programa Sanodelucas</p>
     </div>
   </div>
-  <p class="summary reveal">Coordinación del programa Sanodelucas y otras iniciativas de sustentabilidad, con impacto en beneficiarios, posicionamiento DJSI y reconocimiento del BID por aporte al desarrollo del país.</p>
+  <!-- ▼ TEXTO de este caso (edita entre las etiquetas) -->
+  <p class="summary reveal">Lanzar, gestionar y consolidar la plataforma digital de educación financiera del banco, ampliando su alcance mediante contenidos, publicidad digital, medios masivos y eventos de relacionamiento, como parte de una agenda más amplia de sostenibilidad y reputación institucional orientada a recuperar el liderazgo histórico de Santander en la materia.</p>
+  <!-- ▼ TARJETAS DE RESULTADOS · v = número · l = etiqueta -->
   <div class="kpis">
     <div class="kpi reveal d1"><div class="v">+17<sup>K</sup></div><div class="l">Fans en Facebook · Sanodelucas</div></div>
     <div class="kpi reveal d2"><div class="v">Top<sup>5</sup></div><div class="l">Ranking Nacional de RSE</div></div>
@@ -578,7 +612,7 @@
   <div class="back"><a href="#marcas">← Volver a marcas</a></div>
 </section>
 
-<!-- VIDEO MODAL universal -->
+<!-- ═══════ VENTANA DE VIDEO (no editar) ═══════ -->
 <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="vmodal-bg" data-close></div>
   <div class="vmodal-inner">
@@ -587,7 +621,7 @@
   </div>
 </div>
 
-<!-- CLOSING -->
+<!-- ═══════════════ CIERRE / CONTACTO ═══════════════ -->
 <section class="close" id="contact">
   <div class="close-inner">
     <span class="kicker reveal">Disponible · Q3 2026</span>
